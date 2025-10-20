@@ -1,0 +1,124 @@
+﻿@model IEnumerable<CMCS.Models.User>
+
+@{
+    ViewData["Title"] = "Manage Lecturers";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card">
+    <div class="card-header bg-primary text-white">
+        <h3 class="card-title mb-0">
+            <i class="fas fa-chalkboard-teacher"></i> Manage Lecturers
+        </h3>
+    </div>
+    <div class="card-body">
+        @if (TempData["ErrorMessage"] != null)
+        {
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <i class="fas fa-exclamation-triangle"></i> @TempData["ErrorMessage"]
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        }
+
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <i class="fas fa-check-circle"></i> @TempData["SuccessMessage"]
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        }
+
+        <div class="table-responsive">
+            <table class="table table-striped table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Lecturer</th>
+                        <th>Email</th>
+                        <th>Hourly Rate</th>
+                        <th>Status</th>
+                        <th>Last Modified</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var lecturer in Model)
+                    {
+                        <tr>
+                            <td>
+                                <strong>@lecturer.FirstName @lecturer.LastName</strong>
+                                <br>
+                                <small class="text-muted">ID: @lecturer.UserId</small>
+                            </td>
+                            <td>@lecturer.Email</td>
+                            <td>
+                                <form asp-action="UpdateLecturerRate" method="post" class="d-inline">
+                                    @Html.AntiForgeryToken()
+                                    <input type="hidden" name="lecturerId" value="@lecturer.UserId" />
+                                    <div class="input-group input-group-sm" style="width: 150px;">
+                                        <span class="input-group-text">R</span>
+                                        <input type="number" name="hourlyRate" value="@lecturer.HourlyRate.ToString("F2")"
+                                               step="0.01" min="0.01" max="10000" class="form-control" />
+                                        <button type="submit" class="btn btn-outline-primary" title="Update Rate">
+                                            <i class="fas fa-save"></i>
+                                        </button>
+                                    </div>
+                                </form>
+                            </td>
+                            <td>
+                                <span class="badge bg-@(lecturer.IsActive ? "success" : "danger")">
+                                    @(lecturer.IsActive ? "Active" : "Inactive")
+                                </span>
+                            </td>
+                            <td>
+                                <small>@lecturer.LastModifiedDate.ToString("dd MMM yyyy")</small>
+                            </td>
+                            <td>
+                                <div class="btn-group btn-group-sm">
+                                    <form asp-action="ToggleLecturerStatus" method="post" class="d-inline">
+                                        @Html.AntiForgeryToken()
+                                        <input type="hidden" name="lecturerId" value="@lecturer.UserId" />
+                                        <button type="submit" class="btn btn-@(lecturer.IsActive ? "warning" : "success")">
+                                            <i class="fas fa-@(lecturer.IsActive ? "ban" : "check")"></i>
+                                            @(lecturer.IsActive ? "Deactivate" : "Activate")
+                                        </button>
+                                    </form>
+                                    <a href="@Url.Action("LecturerDetails", new { id = lecturer.UserId })"
+                                       class="btn btn-info" title="View Details">
+                                        <i class="fas fa-eye"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            // Add confirmation for status toggle
+            $('form[action*="ToggleLecturerStatus"]').on('submit', function (e) {
+                const lecturerName = $(this).closest('tr').find('strong').text();
+                const action = $(this).find('button').text().toLowerCase();
+
+                if (!confirm(`Are you sure you want to ${action} lecturer ${lecturerName}?`)) {
+                    e.preventDefault();
+                    return false;
+                }
+            });
+
+            // Validate hourly rate input
+            $('input[name="hourlyRate"]').on('change', function () {
+                const value = parseFloat($(this).val());
+                if (isNaN(value) || value < 0.01 || value > 10000) {
+                    $(this).addClass('is-invalid');
+                } else {
+                    $(this).removeClass('is-invalid');
+                }
+            });
+        });
+    </script>
+}

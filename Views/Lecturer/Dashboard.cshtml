@@ -1,0 +1,271 @@
+﻿@model IEnumerable<CMCS.Models.Claim>
+@{
+    ViewData["Title"] = "Lecturer Dashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-12">
+        <div class="page-header">
+            <h1>Lecturer Dashboard</h1>
+            <p class="text-muted">Welcome, @ViewBag.User?.FirstName @ViewBag.User?.LastName</p>
+        </div>
+    </div>
+</div>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <i class="fas fa-check-circle"></i> @TempData["SuccessMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+}
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <i class="fas fa-exclamation-triangle"></i> @TempData["ErrorMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+}
+
+<!-- Statistics Cards -->
+<div class="row mb-4">
+    <div class="col-xl-3 col-md-6">
+        <div class="card bg-primary text-white mb-4">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h5>Total Claims</h5>
+                        <h3>@ViewBag.TotalClaims</h3>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="fas fa-file-invoice fa-2x"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-3 col-md-6">
+        <div class="card bg-warning text-white mb-4">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h5>Pending</h5>
+                        <h3>@ViewBag.PendingClaims</h3>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="fas fa-clock fa-2x"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-3 col-md-6">
+        <div class="card bg-success text-white mb-4">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h5>Approved</h5>
+                        <h3>@ViewBag.ApprovedClaims</h3>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="fas fa-check-circle fa-2x"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-3 col-md-6">
+        <div class="card bg-info text-white mb-4">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h5>Hourly Rate</h5>
+                        <h3>R @(ViewBag.User?.HourlyRate.ToString("F2") ?? "0.00")</h3>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="fas fa-money-bill-wave fa-2x"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Recent Claims -->
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-history me-2"></i>Recent Claims
+                </h5>
+                <a asp-action="SubmitClaim" class="btn btn-primary">
+                    <i class="fas fa-plus me-1"></i> Submit New Claim
+                </a>
+            </div>
+            <div class="card-body">
+                @if (Model != null && Model.Any())
+                {
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Reference</th>
+                                    <th>Period</th>
+                                    <th>Module</th>
+                                    <th>Hours</th>
+                                    <th>Amount</th>
+                                    <th>Status</th>
+                                    <th>Submitted</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var claim in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            <strong>@claim.ClaimReference</strong>
+                                        </td>
+                                        <td>
+                                            @GetMonthName(claim.MonthWorked)/@claim.YearWorked
+                                        </td>
+                                        <td>@claim.ModuleTaught</td>
+                                        <td>@claim.HoursWorked.ToString("F1")</td>
+                                        <td>R @claim.TotalAmount.ToString("F2")</td>
+                                        <td>
+                                            <span class="badge @GetStatusBadgeClass(claim.Status)">
+                                                @GetStatusDisplayName(claim.Status)
+                                            </span>
+                                        </td>
+                                        <td>@claim.SubmissionDate.ToString("dd MMM yyyy")</td>
+                                        <td>
+                                            <div class="btn-group btn-group-sm">
+                                                <button type="button" class="btn btn-outline-primary"
+                                                        data-bs-toggle="modal" data-bs-target="#claimDetailsModal"
+                                                        data-claim-id="@claim.ClaimId" title="View Details">
+                                                    <i class="fas fa-eye"></i>
+                                                </button>
+                                                <a asp-action="UploadDocuments" asp-route-claimId="@claim.ClaimId"
+                                                   class="btn btn-outline-success" title="Upload Documents">
+                                                    <i class="fas fa-upload"></i>
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="text-center mt-3">
+                        <a asp-action="ViewClaims" class="btn btn-outline-primary">
+                            <i class="fas fa-list me-1"></i> View All Claims
+                        </a>
+                    </div>
+                }
+                else
+                {
+                    <div class="text-center py-5">
+                        <i class="fas fa-file-invoice fa-4x text-muted mb-3"></i>
+                        <h4>No claims submitted yet</h4>
+                        <p class="text-muted mb-4">Get started by submitting your first teaching claim</p>
+                        <a asp-action="SubmitClaim" class="btn btn-primary btn-lg">
+                            <i class="fas fa-plus me-2"></i> Submit Your First Claim
+                        </a>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Claim Details Modal -->
+<div class="modal fade" id="claimDetailsModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Claim Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body" id="claimDetailsContent">
+                <!-- Content will be loaded via AJAX -->
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            // Claim details modal
+            $('#claimDetailsModal').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget);
+                var claimId = button.data('claim-id');
+                var modal = $(this);
+
+                // Load claim details via AJAX
+                $.get('/Lecturer/GetClaimDetails/' + claimId, function (data) {
+                    modal.find('#claimDetailsContent').html(data);
+                }).fail(function () {
+                    modal.find('#claimDetailsContent').html('<div class="alert alert-danger">Error loading claim details.</div>');
+                });
+            });
+        });
+    </script>
+}
+
+@functions {
+    public string GetStatusBadgeClass(ClaimStatus status)
+    {
+        return status switch
+        {
+            ClaimStatus.PENDING => "bg-warning",
+            ClaimStatus.UNDER_REVIEW => "bg-info",
+            ClaimStatus.APPROVED_PC => "bg-primary",
+            ClaimStatus.APPROVED_AM => "bg-info",
+            ClaimStatus.APPROVED_FINAL => "bg-success",
+            ClaimStatus.PAID => "bg-success",
+            ClaimStatus.REJECTED => "bg-danger",
+            ClaimStatus.CANCELLED => "bg-secondary",
+            _ => "bg-secondary"
+        };
+    }
+
+    public string GetStatusDisplayName(ClaimStatus status)
+    {
+        return status switch
+        {
+            ClaimStatus.PENDING => "Pending",
+            ClaimStatus.UNDER_REVIEW => "Under Review",
+            ClaimStatus.APPROVED_PC => "Approved by Coordinator",
+            ClaimStatus.APPROVED_AM => "Approved by Manager",
+            ClaimStatus.APPROVED_FINAL => "Approved - Ready for Payment",
+            ClaimStatus.PAID => "Paid",
+            ClaimStatus.REJECTED => "Rejected",
+            ClaimStatus.CANCELLED => "Cancelled",
+            _ => status.ToString()
+        };
+    }
+
+    public string GetMonthName(int month)
+    {
+        return month switch
+        {
+            1 => "Jan",
+            2 => "Feb",
+            3 => "Mar",
+            4 => "Apr",
+            5 => "May",
+            6 => "Jun",
+            7 => "Jul",
+            8 => "Aug",
+            9 => "Sep",
+            10 => "Oct",
+            11 => "Nov",
+            12 => "Dec",
+            _ => "Unknown"
+        };
+    }
+}

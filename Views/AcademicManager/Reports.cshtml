@@ -1,0 +1,351 @@
+﻿@{
+    ViewData["Title"] = "Reports & Analytics";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card">
+    <div class="card-header bg-info text-white">
+        <h3 class="card-title mb-0">
+            <i class="fas fa-chart-line"></i> Claims Reports & Analytics
+        </h3>
+        <p class="card-subtitle mb-0 mt-1">Comprehensive overview of claims processing and performance metrics</p>
+    </div>
+    <div class="card-body">
+        @if (TempData["ErrorMessage"] != null)
+        {
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <i class="fas fa-exclamation-triangle"></i> @TempData["ErrorMessage"]
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        }
+
+        <!-- Summary Statistics -->
+        <div class="row mb-4">
+            <div class="col-md-3 mb-3">
+                <div class="card bg-primary text-white">
+                    <div class="card-body text-center">
+                        <h3>@ViewBag.TotalClaims</h3>
+                        <p class="mb-0">Total Claims</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-3">
+                <div class="card bg-success text-white">
+                    <div class="card-body text-center">
+                        <h3>@ViewBag.ApprovedClaims</h3>
+                        <p class="mb-0">Approved Claims</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-3">
+                <div class="card bg-danger text-white">
+                    <div class="card-body text-center">
+                        <h3>@ViewBag.RejectedClaims</h3>
+                        <p class="mb-0">Rejected Claims</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-3">
+                <div class="card bg-warning text-dark">
+                    <div class="card-body text-center">
+                        <h3>R @ViewBag.TotalAmount.ToString("F2")</h3>
+                        <p class="mb-0">Total Approved Amount</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Monthly Statistics Table -->
+        <div class="card mb-4">
+            <div class="card-header bg-secondary text-white">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-calendar-alt"></i> Monthly Claims Statistics (Last 3 Months)
+                </h5>
+            </div>
+            <div class="card-body">
+                @if (ViewBag.MonthlyStats != null && ((IEnumerable<dynamic>)ViewBag.MonthlyStats).Any())
+                {
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover" id="monthlyStatsTable">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>Period</th>
+                                    <th>Total Claims</th>
+                                    <th>Approved Claims</th>
+                                    <th>Rejected Claims</th>
+                                    <th>Approval Rate</th>
+                                    <th>Total Amount</th>
+                                    <th>Average Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var stat in (IEnumerable<dynamic>)ViewBag.MonthlyStats)
+                                {
+                                    var approvalRate = stat.TotalClaims > 0 ?
+                                    (stat.ApprovedClaims * 100.0 / stat.TotalClaims) : 0;
+                                    var averageAmount = stat.ApprovedClaims > 0 ?
+                                    (stat.TotalAmount / stat.ApprovedClaims) : 0;
+
+                                    <tr>
+                                        <td>
+                                            <strong>@stat.Period.ToString("MMM yyyy")</strong>
+                                        </td>
+                                        <td>
+                                            <span class="badge bg-primary">@stat.TotalClaims</span>
+                                        </td>
+                                        <td>
+                                            <span class="badge bg-success">@stat.ApprovedClaims</span>
+                                        </td>
+                                        <td>
+                                            <span class="badge bg-danger">@stat.RejectedClaims</span>
+                                        </td>
+                                        <td>
+                                            <div class="progress" style="height: 20px;">
+                                                <div class="progress-bar bg-success"
+                                                     role="progressbar"
+                                                     style="width: @approvalRate.ToString("F0")%"
+                                                     aria-valuenow="@approvalRate"
+                                                     aria-valuemin="0"
+                                                     aria-valuemax="100">
+                                                    @approvalRate.ToString("F1")%
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <strong class="text-success">R @stat.TotalAmount.ToString("F2")</strong>
+                                        </td>
+                                        <td>
+                                            <span class="text-info">R @averageAmount.ToString("F2")</span>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                }
+                else
+                {
+                    <div class="text-center py-4">
+                        <i class="fas fa-chart-bar fa-3x text-muted mb-3"></i>
+                        <p class="text-muted">No monthly statistics available for the selected period.</p>
+                    </div>
+                }
+            </div>
+        </div>
+
+        <!-- Performance Metrics -->
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header bg-success text-white">
+                        <h5 class="card-title mb-0">
+                            <i class="fas fa-tachometer-alt"></i> Performance Metrics
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        @{
+                            var totalProcessed = ViewBag.ApprovedClaims + ViewBag.RejectedClaims;
+                            var overallApprovalRate = totalProcessed > 0 ?
+                            (ViewBag.ApprovedClaims * 100.0 / totalProcessed) : 0;
+                            var avgProcessingTime = "2.5 days"; // This would come from actual data
+                        }
+
+                        <div class="list-group list-group-flush">
+                            <div class="list-group-item d-flex justify-content-between align-items-center">
+                                Overall Approval Rate
+                                <span class="badge bg-success rounded-pill">@overallApprovalRate.ToString("F1")%</span>
+                            </div>
+                            <div class="list-group-item d-flex justify-content-between align-items-center">
+                                Average Processing Time
+                                <span class="badge bg-info rounded-pill">@avgProcessingTime</span>
+                            </div>
+                            <div class="list-group-item d-flex justify-content-between align-items-center">
+                                Claims This Month
+                                <span class="badge bg-primary rounded-pill">
+                                    @(((IEnumerable<dynamic>)ViewBag.MonthlyStats)?.FirstOrDefault()?.TotalClaims ?? 0)
+                                </span>
+                            </div>
+                            <div class="list-group-item d-flex justify-content-between align-items-center">
+                                Monthly Approval Rate
+                                <span class="badge bg-warning rounded-pill">
+                                    @{
+                                        var currentMonthStat = ((IEnumerable<dynamic>)ViewBag.MonthlyStats)?.FirstOrDefault();
+                                        var monthlyRate = currentMonthStat != null && currentMonthStat.TotalClaims > 0 ?
+                                        (currentMonthStat.ApprovedClaims * 100.0 / currentMonthStat.TotalClaims) : 0;
+                                    }
+                                    @monthlyRate.ToString("F1")%
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header bg-warning text-dark">
+                        <h5 class="card-title mb-0">
+                            <i class="fas fa-chart-pie"></i> Claims Distribution
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        @if (ViewBag.TotalClaims > 0)
+                        {
+                            var approvedPercentage = (ViewBag.ApprovedClaims * 100.0 / ViewBag.TotalClaims);
+                            var rejectedPercentage = (ViewBag.RejectedClaims * 100.0 / ViewBag.TotalClaims);
+                            var pendingPercentage = 100 - approvedPercentage - rejectedPercentage;
+
+                            <div class="text-center">
+                                <!-- Simple pie chart using progress bars -->
+                                <div class="mb-3">
+                                    <div class="d-flex justify-content-between mb-1">
+                                        <small>Approved: @approvedPercentage.ToString("F1")%</small>
+                                        <small>Rejected: @rejectedPercentage.ToString("F1")%</small>
+                                        <small>Pending: @pendingPercentage.ToString("F1")%</small>
+                                    </div>
+                                    <div class="progress" style="height: 30px;">
+                                        <div class="progress-bar bg-success" style="width: @approvedPercentage%">
+                                            @ViewBag.ApprovedClaims
+                                        </div>
+                                        <div class="progress-bar bg-danger" style="width: @rejectedPercentage%">
+                                            @ViewBag.RejectedClaims
+                                        </div>
+                                        <div class="progress-bar bg-warning" style="width: @pendingPercentage%">
+                                            @(ViewBag.TotalClaims - ViewBag.ApprovedClaims - ViewBag.RejectedClaims)
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row text-center mt-3">
+                                    <div class="col-4">
+                                        <div class="border rounded p-2 bg-success text-white">
+                                            <h5 class="mb-0">@ViewBag.ApprovedClaims</h5>
+                                            <small>Approved</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="border rounded p-2 bg-danger text-white">
+                                            <h5 class="mb-0">@ViewBag.RejectedClaims</h5>
+                                            <small>Rejected</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="border rounded p-2 bg-warning text-dark">
+                                            <h5 class="mb-0">@(ViewBag.TotalClaims - ViewBag.ApprovedClaims - ViewBag.RejectedClaims)</h5>
+                                            <small>Pending/Other</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <p class="text-muted text-center">No claims data available for analysis.</p>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Export and Actions -->
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header bg-dark text-white">
+                        <h5 class="card-title mb-0">
+                            <i class="fas fa-download"></i> Export Reports
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-4 mb-2">
+                                <button class="btn btn-outline-success w-100" id="exportMonthlyReport">
+                                    <i class="fas fa-file-excel"></i> Export Monthly Report
+                                </button>
+                            </div>
+                            <div class="col-md-4 mb-2">
+                                <button class="btn btn-outline-primary w-100" id="exportPerformanceReport">
+                                    <i class="fas fa-file-pdf"></i> Export Performance Report
+                                </button>
+                            </div>
+                            <div class="col-md-4 mb-2">
+                                <button class="btn btn-outline-info w-100" id="exportAnalytics">
+                                    <i class="fas fa-chart-bar"></i> Export Analytics Data
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="mt-3">
+    <a href="@Url.Action("Dashboard")" class="btn btn-secondary">
+        <i class="fas fa-arrow-left"></i> Back to Dashboard
+    </a>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            // Initialize DataTable for monthly stats
+            $('#monthlyStatsTable').DataTable({
+                "pageLength": 10,
+                "ordering": true,
+                "searching": false,
+                "responsive": true,
+                "order": [[0, 'desc']], // Sort by Period descending
+                "language": {
+                    "lengthMenu": "Show _MENU_ months per page",
+                    "info": "Showing _START_ to _END_ of _TOTAL_ months"
+                }
+            });
+
+            // Export functionality
+            $('#exportMonthlyReport').click(function() {
+                alert('Monthly report export functionality would be implemented here');
+                // In a real implementation, this would call a controller method to generate Excel
+            });
+
+            $('#exportPerformanceReport').click(function() {
+                alert('Performance report export functionality would be implemented here');
+                // In a real implementation, this would call a controller method to generate PDF
+            });
+
+            $('#exportAnalytics').click(function() {
+                alert('Analytics data export functionality would be implemented here');
+                // In a real implementation, this would call a controller method to generate CSV
+            });
+
+            // Add some basic chart animations
+            $('.progress-bar').each(function() {
+                var width = $(this).css('width');
+                $(this).css('width', '0').animate({
+                    width: width
+                }, 1000);
+            });
+        });
+    </script>
+
+    <style>
+        .progress {
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            font-weight: bold;
+        }
+
+        .card-header {
+            font-weight: 600;
+        }
+
+        .list-group-item {
+            border: none;
+            padding: 0.75rem 0;
+        }
+    </style>
+}

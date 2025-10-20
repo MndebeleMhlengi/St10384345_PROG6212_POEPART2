@@ -1,0 +1,110 @@
+﻿@{
+    ViewData["Title"] = "Home - Contract Monthly Claim System";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="text-center">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="jumbotron bg-primary text-white p-5 rounded mb-4">
+                <h1 class="display-4"><i class="fas fa-file-invoice-dollar me-3"></i>Contract Monthly Claim System</h1>
+                <p class="lead">Manage your monthly teaching claims efficiently and transparently</p>
+            </div>
+
+            @if (User.Identity.IsAuthenticated)
+            {
+                <div class="row">
+                    @if (User.IsInRole("Lecturer"))
+                    {
+                        <div class="col-md-6 mb-3">
+                            <div class="card h-100">
+                                <div class="card-body text-center">
+                                    <i class="fas fa-chalkboard-teacher fa-3x text-primary mb-3"></i>
+                                    <h5 class="card-title">Lecturer Dashboard</h5>
+                                    <p class="card-text">Submit and track your monthly teaching claims</p>
+                                    <a href="@Url.Action("Dashboard", "Lecturer")" class="btn btn-primary">Go to Dashboard</a>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                    @if (User.IsInRole("ProgrammeCoordinator"))
+                    {
+                        <div class="col-md-6 mb-3">
+                            <div class="card h-100">
+                                <div class="card-body text-center">
+                                    <i class="fas fa-tasks fa-3x text-success mb-3"></i>
+                                    <h5 class="card-title">Programme Coordinator</h5>
+                                    <p class="card-text">Review and approve lecturer claims</p>
+                                    <a href="@Url.Action("Dashboard", "ProgrammeCoordinator")" class="btn btn-success">Review Claims</a>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                    @if (User.IsInRole("HR"))
+                    {
+                        <div class="col-md-6 mb-3">
+                            <div class="card h-100">
+                                <div class="card-body text-center">
+                                    <i class="fas fa-credit-card fa-3x text-info mb-3"></i>
+                                    <h5 class="card-title">HR Dashboard</h5>
+                                    <p class="card-text">Process payments for approved claims</p>
+                                    <a href="@Url.Action("Dashboard", "HR")" class="btn btn-info">Process Payments</a>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                    @if (User.IsInRole("AcademicManager"))
+                    {
+                        <div class="col-md-6 mb-3">
+                            <div class="card h-100">
+                                <div class="card-body text-center">
+                                    <i class="fas fa-chart-line fa-3x text-warning mb-3"></i>
+                                    <h5 class="card-title">Academic Manager</h5>
+                                    <p class="card-text">Oversee all claims and system analytics</p>
+                                    <a href="@Url.Action("Dashboard", "AcademicManager")" class="btn btn-warning">View Analytics</a>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+
+                <div class="mt-4">
+                    <h4>Quick Links</h4>
+                    <div class="row">
+                        <div class="col-md-4 mb-2">
+                            <a href="@Url.Action("Index", "Claims")" class="btn btn-outline-primary btn-block w-100">
+                                <i class="fas fa-file-alt me-2"></i>View All Claims
+                            </a>
+                        </div>
+                        @if (User.IsInRole("Lecturer"))
+                        {
+                            <div class="col-md-4 mb-2">
+                                <a href="@Url.Action("Create", "Claims")" class="btn btn-outline-success btn-block w-100">
+                                    <i class="fas fa-plus-circle me-2"></i>Submit New Claim
+                                </a>
+                            </div>
+                            <div class="col-md-4 mb-2">
+                                <a href="@Url.Action("Index", "Documents")" class="btn btn-outline-info btn-block w-100">
+                                    <i class="fas fa-upload me-2"></i>Upload Documents
+                                </a>
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="alert alert-info">
+                    <h4><i class="fas fa-info-circle me-2"></i>Welcome to CMCS</h4>
+                    <p>Please log in to access your dashboard and manage your claims.</p>
+                    <a href="@Url.Action("Login", "Account")" class="btn btn-primary">
+                        <i class="fas fa-sign-in-alt me-2"></i>Login
+                    </a>
+                </div>
+            }
+        </div>
+    </div>
+</div>

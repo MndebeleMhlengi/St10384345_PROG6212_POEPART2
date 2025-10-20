@@ -1,0 +1,318 @@
+﻿@model CMCS.Models.ViewModels.ClaimSubmissionViewModel
+
+@{
+    ViewData["Title"] = "Submit Monthly Claim";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-10">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h3 class="card-title mb-0">
+                    <i class="fas fa-file-invoice-dollar"></i> Submit Monthly Claim
+                </h3>
+                <p class="card-subtitle mb-0 mt-1 opacity-75">Fill in the details below to submit your monthly teaching claim</p>
+            </div>
+            <div class="card-body">
+                @if (TempData["ErrorMessage"] != null)
+                {
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <i class="fas fa-exclamation-triangle"></i> @TempData["ErrorMessage"]
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                }
+
+                @if (!ViewData.ModelState.IsValid)
+                {
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <h5><i class="fas fa-exclamation-circle"></i> Please fix the following errors:</h5>
+                        <ul class="mb-0">
+                            @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                            {
+                                <li>@error.ErrorMessage</li>
+                            }
+                        </ul>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                }
+
+                <form asp-action="SubmitClaim" method="post" id="claimForm">
+                    @Html.AntiForgeryToken()
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group mb-3">
+                                <label asp-for="MonthWorked" class="form-label fw-bold">Month Worked *</label>
+                                <select asp-for="MonthWorked" class="form-control form-select" required>
+                                    <option value="">Select Month</option>
+                                    <option value="1">January</option>
+                                    <option value="2">February</option>
+                                    <option value="3">March</option>
+                                    <option value="4">April</option>
+                                    <option value="5">May</option>
+                                    <option value="6">June</option>
+                                    <option value="7">July</option>
+                                    <option value="8">August</option>
+                                    <option value="9">September</option>
+                                    <option value="10">October</option>
+                                    <option value="11">November</option>
+                                    <option value="12">December</option>
+                                </select>
+                                <span asp-validation-for="MonthWorked" class="text-danger small"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group mb-3">
+                                <label asp-for="YearWorked" class="form-label fw-bold">Year Worked *</label>
+                                <input asp-for="YearWorked" class="form-control" type="number"
+                                       min="2020" max="2030" required />
+                                <span asp-validation-for="YearWorked" class="text-danger small"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group mb-3">
+                                <label asp-for="HoursWorked" class="form-label fw-bold">Hours Worked *</label>
+                                <input asp-for="HoursWorked" class="form-control"
+                                       id="hoursWorked"
+                                       type="number"
+                                       min="0.1"
+                                       max="500"
+                                       step="0.1"
+                                       placeholder="Enter hours worked"
+                                       required />
+                                <div class="form-text">Enter the total hours worked for the month</div>
+                                <span asp-validation-for="HoursWorked" class="text-danger small"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group mb-3">
+                                <label asp-for="HourlyRate" class="form-label fw-bold">Hourly Rate (R) *</label>
+                                <input asp-for="HourlyRate" class="form-control"
+                                       id="hourlyRate"
+                                       type="number"
+                                       min="0.01"
+                                       max="10000"
+                                       step="0.01"
+                                       placeholder="Enter hourly rate"
+                                       required />
+                                <div class="form-text">
+                                    <i class="fas fa-info-circle"></i> Enter your hourly rate for this claim
+                                </div>
+                                <span asp-validation-for="HourlyRate" class="text-danger small"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label asp-for="ModuleTaught" class="form-label fw-bold">Module Taught *</label>
+                        <input asp-for="ModuleTaught" class="form-control"
+                               placeholder="e.g., PROG6212 - Programming 2B"
+                               maxlength="100"
+                               required />
+                        <span asp-validation-for="ModuleTaught" class="text-danger small"></span>
+                    </div>
+
+                    <div class="form-group mb-4">
+                        <label asp-for="AdditionalNotes" class="form-label fw-bold">Additional Notes</label>
+                        <textarea asp-for="AdditionalNotes" class="form-control"
+                                  rows="3"
+                                  placeholder="Any additional information about this claim (optional)..."
+                                  maxlength="500"></textarea>
+                        <div class="form-text">Optional: Add any relevant information about this claim</div>
+                        <span asp-validation-for="AdditionalNotes" class="text-danger small"></span>
+                    </div>
+
+                    <!-- Claim Summary Card -->
+                    <div class="card border-success mb-4">
+                        <div class="card-header bg-success text-white">
+                            <h6 class="card-title mb-0">
+                                <i class="fas fa-calculator"></i> Claim Summary
+                            </h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="row text-center">
+                                <div class="col-md-4 border-end">
+                                    <h6 class="text-muted">Hours Worked</h6>
+                                    <h4 class="text-primary" id="displayHours">0.0</h4>
+                                </div>
+                                <div class="col-md-4 border-end">
+                                    <h6 class="text-muted">Hourly Rate</h6>
+                                    <h4 class="text-info" id="displayRate">R 0.00</h4>
+                                </div>
+                                <div class="col-md-4">
+                                    <h6 class="text-muted">Total Amount</h6>
+                                    <h4 class="text-success" id="totalAmount">R 0.00</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <a asp-action="Dashboard" class="btn btn-secondary me-md-2">
+                                <i class="fas fa-arrow-left"></i> Back to Dashboard
+                            </a>
+                            <button type="submit" class="btn btn-primary btn-lg" id="submitButton">
+                                <i class="fas fa-paper-plane"></i> Submit Claim
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        $(document).ready(function () {
+            // Calculate total amount in real-time
+            function calculateTotal() {
+                const hours = parseFloat($('#hoursWorked').val()) || 0;
+                const rate = parseFloat($('#hourlyRate').val()) || 0;
+                const total = hours * rate;
+
+                $('#displayHours').text(hours.toFixed(1));
+                $('#displayRate').text('R ' + rate.toFixed(2));
+                $('#totalAmount').text('R ' + total.toFixed(2));
+
+                // Clear any previous custom validity
+                $('#hoursWorked')[0].setCustomValidity('');
+                $('#hourlyRate')[0].setCustomValidity('');
+            }
+
+            // Event handler for hours input
+            $('#hoursWorked').on('input', function() {
+                const hours = parseFloat($(this).val());
+                if (hours < 0.1 || hours > 500) {
+                    $(this)[0].setCustomValidity('Hours must be between 0.1 and 500');
+                } else {
+                    $(this)[0].setCustomValidity('');
+                }
+                calculateTotal();
+            });
+
+            // Event handler for hourly rate input
+            $('#hourlyRate').on('input', function() {
+                const rate = parseFloat($(this).val());
+                if (rate < 0.01 || rate > 10000) {
+                    $(this)[0].setCustomValidity('Hourly rate must be between 0.01 and 10,000');
+                } else {
+                    $(this)[0].setCustomValidity('');
+                }
+                calculateTotal();
+            });
+
+            // Enhanced form validation
+            $('#claimForm').on('submit', function (e) {
+                const hours = parseFloat($('#hoursWorked').val());
+                const rate = parseFloat($('#hourlyRate').val());
+                const month = $('#MonthWorked').val();
+                const year = $('#YearWorked').val();
+                const module = $('#ModuleTaught').val().trim();
+
+                let isValid = true;
+                let errorMessages = [];
+
+                // Validate month
+                if (!month) {
+                    errorMessages.push('• Please select a month.');
+                    isValid = false;
+                }
+
+                // Validate year
+                if (!year || year < 2020 || year > 2030) {
+                    errorMessages.push('• Please enter a valid year between 2020 and 2030.');
+                    isValid = false;
+                }
+
+                // Validate hours
+                if (isNaN(hours) || hours < 0.1 || hours > 500) {
+                    errorMessages.push('• Hours worked must be between 0.1 and 500.');
+                    isValid = false;
+                }
+
+                // Validate rate
+                if (isNaN(rate) || rate < 0.01 || rate > 10000) {
+                    errorMessages.push('• Hourly rate must be between 0.01 and 10,000.');
+                    isValid = false;
+                }
+
+                // Validate module
+                if (!module) {
+                    errorMessages.push('• Please enter the module taught.');
+                    isValid = false;
+                }
+
+                if (!isValid) {
+                    e.preventDefault();
+
+                    // Show error message
+                    const errorHtml = '<div class="alert alert-danger alert-dismissible fade show" role="alert">' +
+                        '<h5><i class="fas fa-exclamation-circle"></i> Please fix the following errors:</h5>' +
+                        '<ul class="mb-0">' +
+                        errorMessages.map(msg => '<li>' + msg + '</li>').join('') +
+                        '</ul>' +
+                        '<button type="button" class="btn-close" data-bs-dismiss="alert"></button>' +
+                        '</div>';
+
+                    // Remove existing error alerts and add new one
+                    $('.alert-danger').remove();
+                    $(errorHtml).insertBefore('#claimForm');
+
+                    // Scroll to top
+                    $('html, body').animate({ scrollTop: 0 }, 500);
+                    return false;
+                }
+
+                // Show loading state
+                $('#submitButton').prop('disabled', true).html('<i class="fas fa-spinner fa-spin"></i> Submitting...');
+                return true;
+            });
+
+            // Initialize calculation on page load
+            calculateTotal();
+        });
+    </script>
+
+    <style>
+        .card-header.bg-primary {
+            background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+        }
+
+        .card-header.bg-success {
+            background: linear-gradient(135deg, #28a745 0%, #1e7e34 100%);
+        }
+
+        .form-label.fw-bold {
+            color: #2c3e50;
+        }
+
+        #displayHours, #displayRate, #totalAmount {
+            font-weight: 600;
+        }
+
+        .input-validation-error {
+            border-color: #dc3545 !important;
+        }
+
+        .field-validation-error {
+            color: #dc3545;
+            font-size: 0.875em;
+            margin-top: 0.25rem;
+        }
+
+        .form-control:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+        }
+    </style>
+}

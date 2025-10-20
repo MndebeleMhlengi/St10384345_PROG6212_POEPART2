@@ -1,0 +1,240 @@
+﻿@model IEnumerable<CMCS.Models.Claim>
+
+@{
+    ViewData["Title"] = "HR Dashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <!-- Statistics Cards -->
+    <div class="col-md-3 mb-4">
+        <div class="card bg-primary text-white">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h4 class="card-title">@ViewBag.TotalForPayment</h4>
+                        <p class="card-text">Ready for Payment</p>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="fas fa-file-invoice-dollar fa-2x"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3 mb-4">
+        <div class="card bg-success text-white">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h4 class="card-title">R @ViewBag.TotalAmount.ToString("F2")</h4>
+                        <p class="card-text">Total Amount</p>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="fas fa-money-bill-wave fa-2x"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3 mb-4">
+        <div class="card bg-info text-white">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h4 class="card-title">@ViewBag.ThisMonthPaid</h4>
+                        <p class="card-text">Paid This Month</p>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="fas fa-calendar-check fa-2x"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3 mb-4">
+        <div class="card bg-warning text-dark">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h4 class="card-title">@ViewBag.ActiveLecturers</h4>
+                        <p class="card-text">Active Lecturers</p>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="fas fa-chalkboard-teacher fa-2x"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header bg-success text-white">
+                <h3 class="card-title mb-0">
+                    <i class="fas fa-list-check"></i> Claims Ready for Payment
+                </h3>
+            </div>
+            <div class="card-body">
+                @if (TempData["ErrorMessage"] != null)
+                {
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <i class="fas fa-exclamation-triangle"></i> @TempData["ErrorMessage"]
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                }
+
+                @if (TempData["SuccessMessage"] != null)
+                {
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <i class="fas fa-check-circle"></i> @TempData["SuccessMessage"]
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                }
+
+                @if (Model.Any())
+                {
+                    <form id="paymentForm" asp-action="MarkMultipleAsPaid" method="post">
+                        @Html.AntiForgeryToken()
+
+                        <div class="table-responsive">
+                            <table class="table table-striped table-hover">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th width="30">
+                                            <input type="checkbox" id="selectAll" />
+                                        </th>
+                                        <th>Lecturer</th>
+                                        <th>Claim Reference</th>
+                                        <th>Month/Year</th>
+                                        <th>Hours</th>
+                                        <th>Amount</th>
+                                        <th>Final Approval</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var claim in Model)
+                                    {
+                                        var monthYear = new DateTime(claim.YearWorked, claim.MonthWorked, 1).ToString("MMM yyyy");
+                                        <tr>
+                                            <td>
+                                                <input type="checkbox" name="claimIds" value="@claim.ClaimId" class="claim-checkbox" />
+                                            </td>
+                                            <td>
+                                                <strong>@claim.Lecturer?.FirstName @claim.Lecturer?.LastName</strong>
+                                                <br>
+                                                <small class="text-muted">@claim.Lecturer?.Email</small>
+                                            </td>
+                                            <td>
+                                                <span class="badge bg-secondary">@claim.ClaimReference</span>
+                                            </td>
+                                            <td>@monthYear</td>
+                                            <td>
+                                                <span class="badge bg-info">@claim.HoursWorked.ToString("F1") hours</span>
+                                            </td>
+                                            <td>
+                                                <strong class="text-success">R @claim.TotalAmount.ToString("F2")</strong>
+                                            </td>
+                                            <td>
+                                                <small>@claim.LastModifiedDate.ToString("dd MMM yyyy")</small>
+                                            </td>
+                                            <td>
+                                                <div class="btn-group btn-group-sm">
+                                                    <form asp-action="MarkAsPaid" method="post" class="d-inline">
+                                                        @Html.AntiForgeryToken()
+                                                        <input type="hidden" name="claimId" value="@claim.ClaimId" />
+                                                        <button type="submit" class="btn btn-success btn-sm"
+                                                                onclick="return confirm('Mark claim @claim.ClaimReference as paid?')">
+                                                            <i class="fas fa-check"></i> Mark Paid
+                                                        </button>
+                                                    </form>
+                                                    <a href="@Url.Action("LecturerDetails", new { id = claim.LecturerId })"
+                                                       class="btn btn-info btn-sm" title="View Lecturer">
+                                                        <i class="fas fa-user"></i>
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="8">
+                                            <button type="submit" class="btn btn-success" id="markMultiplePaid">
+                                                <i class="fas fa-check-double"></i> Mark Selected as Paid
+                                            </button>
+                                            <span class="ms-2 text-muted">
+                                                <span id="selectedCount">0</span> claims selected
+                                            </span>
+                                        </td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </form>
+                }
+                else
+                {
+                    <div class="text-center py-5">
+                        <i class="fas fa-inbox fa-4x text-muted mb-3"></i>
+                        <h4 class="text-muted">No Claims Ready for Payment</h4>
+                        <p class="text-muted">There are currently no claims that are ready for payment.</p>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            // Select all functionality
+            $('#selectAll').change(function () {
+                $('.claim-checkbox').prop('checked', this.checked);
+                updateSelectedCount();
+            });
+
+            // Update selected count
+            $('.claim-checkbox').change(function () {
+                updateSelectedCount();
+                $('#selectAll').prop('checked',
+                    $('.claim-checkbox:checked').length === $('.claim-checkbox').length
+                );
+            });
+
+            function updateSelectedCount() {
+                const selectedCount = $('.claim-checkbox:checked').length;
+                $('#selectedCount').text(selectedCount);
+                $('#markMultiplePaid').prop('disabled', selectedCount === 0);
+            }
+
+            // Multiple payment confirmation
+            $('#paymentForm').on('submit', function (e) {
+                const selectedCount = $('.claim-checkbox:checked').length;
+                if (selectedCount === 0) {
+                    e.preventDefault();
+                    alert('Please select at least one claim to mark as paid.');
+                    return false;
+                }
+
+                if (!confirm(`Are you sure you want to mark ${selectedCount} claim(s) as paid?`)) {
+                    e.preventDefault();
+                    return false;
+                }
+
+                // Show loading state
+                $('#markMultiplePaid').prop('disabled', true).html('<i class="fas fa-spinner fa-spin"></i> Processing...');
+            });
+
+            // Initialize count
+            updateSelectedCount();
+        });
+    </script>
+}

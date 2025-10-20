@@ -1,0 +1,117 @@
+﻿@model IEnumerable<CMCS.Models.Claim>
+
+@{
+    ViewData["Title"] = "Payment Reports";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card">
+    <div class="card-header bg-info text-white">
+        <h3 class="card-title mb-0">
+            <i class="fas fa-file-invoice-dollar"></i> Payment Reports
+        </h3>
+    </div>
+    <div class="card-body">
+        <!-- Period Filter -->
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <div class="btn-group">
+                    <a href="@Url.Action("PaymentReports", new { period = "current-month" })"
+                       class="btn btn-@(ViewBag.SelectedPeriod == "current-month" ? "primary" : "outline-primary")">
+                        Current Month
+                    </a>
+                    <a href="@Url.Action("PaymentReports", new { period = "last-month" })"
+                       class="btn btn-@(ViewBag.SelectedPeriod == "last-month" ? "primary" : "outline-primary")">
+                        Last Month
+                    </a>
+                    <a href="@Url.Action("PaymentReports", new { period = "all" })"
+                       class="btn btn-@(ViewBag.SelectedPeriod == "all" ? "primary" : "outline-primary")">
+                        All Time
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-6 text-end">
+                <a href="@Url.Action("ExportPayments", new { period = ViewBag.SelectedPeriod })"
+                   class="btn btn-success">
+                    <i class="fas fa-download"></i> Export CSV
+                </a>
+            </div>
+        </div>
+
+        <!-- Summary Cards -->
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <div class="card bg-light">
+                    <div class="card-body text-center">
+                        <h3 class="text-success">@ViewBag.TotalPaidCount</h3>
+                        <p class="text-muted mb-0">Total Paid Claims</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card bg-light">
+                    <div class="card-body text-center">
+                        <h3 class="text-success">R @ViewBag.TotalPaidAmount.ToString("F2")</h3>
+                        <p class="text-muted mb-0">Total Amount Paid</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @if (Model.Any())
+        {
+            <div class="table-responsive">
+                <table class="table table-striped table-hover">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Claim Reference</th>
+                            <th>Lecturer</th>
+                            <th>Month/Year</th>
+                            <th>Hours</th>
+                            <th>Amount</th>
+                            <th>Paid Date</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var claim in Model)
+                        {
+                            var monthYear = new DateTime(claim.YearWorked, claim.MonthWorked, 1).ToString("MMM yyyy");
+                            <tr>
+                                <td>
+                                    <span class="badge bg-secondary">@claim.ClaimReference</span>
+                                </td>
+                                <td>
+                                    <strong>@claim.Lecturer?.FirstName @claim.Lecturer?.LastName</strong>
+                                    <br>
+                                    <small class="text-muted">@claim.Lecturer?.Email</small>
+                                </td>
+                                <td>@monthYear</td>
+                                <td>
+                                    <span class="badge bg-info">@claim.HoursWorked.ToString("F1") hours</span>
+                                </td>
+                                <td>
+                                    <strong class="text-success">R @claim.TotalAmount.ToString("F2")</strong>
+                                </td>
+                                <td>
+                                    <small>@claim.LastModifiedDate.ToString("dd MMM yyyy HH:mm")</small>
+                                </td>
+                                <td>
+                                    <span class="badge bg-success">PAID</span>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+        else
+        {
+            <div class="text-center py-5">
+                <i class="fas fa-receipt fa-4x text-muted mb-3"></i>
+                <h4 class="text-muted">No Payment Records</h4>
+                <p class="text-muted">No paid claims found for the selected period.</p>
+            </div>
+        }
+    </div>
+</div>
