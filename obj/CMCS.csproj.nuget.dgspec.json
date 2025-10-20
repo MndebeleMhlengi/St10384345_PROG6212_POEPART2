@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\lab_services_student\\OneDrive - ADvTECH Ltd\\Desktop\\CMCS\\CMCS.csproj": {}
+    "C:\\Users\\lab_services_student\\OneDrive - ADvTECH Ltd\\Desktop\\ST10384345_PROG6212_POEPART2\\St10384345_PROG6212_POEPART2\\CMCS.csproj": {}
   },
   "projects": {
-    "C:\\Users\\lab_services_student\\OneDrive - ADvTECH Ltd\\Desktop\\CMCS\\CMCS.csproj": {
+    "C:\\Users\\lab_services_student\\OneDrive - ADvTECH Ltd\\Desktop\\ST10384345_PROG6212_POEPART2\\St10384345_PROG6212_POEPART2\\CMCS.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\lab_services_student\\OneDrive - ADvTECH Ltd\\Desktop\\CMCS\\CMCS.csproj",
+        "projectUniqueName": "C:\\Users\\lab_services_student\\OneDrive - ADvTECH Ltd\\Desktop\\ST10384345_PROG6212_POEPART2\\St10384345_PROG6212_POEPART2\\CMCS.csproj",
         "projectName": "CMCS",
-        "projectPath": "C:\\Users\\lab_services_student\\OneDrive - ADvTECH Ltd\\Desktop\\CMCS\\CMCS.csproj",
+        "projectPath": "C:\\Users\\lab_services_student\\OneDrive - ADvTECH Ltd\\Desktop\\ST10384345_PROG6212_POEPART2\\St10384345_PROG6212_POEPART2\\CMCS.csproj",
         "packagesPath": "C:\\Users\\lab_services_student\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\lab_services_student\\OneDrive - ADvTECH Ltd\\Desktop\\CMCS\\obj\\",
+        "outputPath": "C:\\Users\\lab_services_student\\OneDrive - ADvTECH Ltd\\Desktop\\ST10384345_PROG6212_POEPART2\\St10384345_PROG6212_POEPART2\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
