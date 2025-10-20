@@ -992,3 +992,17 @@ C:\Users\lab_services_student\OneDrive - ADvTECH Ltd\Desktop\CMCS\obj\Debug\net9
 C:\Users\lab_services_student\OneDrive - ADvTECH Ltd\Desktop\CMCS\obj\Debug\net9.0\CMCS.pdb
 C:\Users\lab_services_student\OneDrive - ADvTECH Ltd\Desktop\CMCS\obj\Debug\net9.0\CMCS.genruntimeconfig.cache
 C:\Users\lab_services_student\OneDrive - ADvTECH Ltd\Desktop\CMCS\obj\Debug\net9.0\ref\CMCS.dll
+C:\Users\lab_services_student\OneDrive - ADvTECH Ltd\Desktop\ST10384345_PROG6212_POEPART2\St10384345_PROG6212_POEPART2\obj\Debug\net9.0\CMCS.csproj.AssemblyReference.cache
+C:\Users\lab_services_student\OneDrive - ADvTECH Ltd\Desktop\ST10384345_PROG6212_POEPART2\St10384345_PROG6212_POEPART2\obj\Debug\net9.0\rpswa.dswa.cache.json
+C:\Users\lab_services_student\OneDrive - ADvTECH Ltd\Desktop\ST10384345_PROG6212_POEPART2\St10384345_PROG6212_POEPART2\obj\Debug\net9.0\MvcTestingAppManifest.json
+C:\Users\lab_services_student\OneDrive - ADvTECH Ltd\Desktop\ST10384345_PROG6212_POEPART2\St10384345_PROG6212_POEPART2\obj\Debug\net9.0\CMCS.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\lab_services_student\OneDrive - ADvTECH Ltd\Desktop\ST10384345_PROG6212_POEPART2\St10384345_PROG6212_POEPART2\obj\Debug\net9.0\CMCS.AssemblyInfoInputs.cache
+C:\Users\lab_services_student\OneDrive - ADvTECH Ltd\Desktop\ST10384345_PROG6212_POEPART2\St10384345_PROG6212_POEPART2\obj\Debug\net9.0\CMCS.AssemblyInfo.cs
+C:\Users\lab_services_student\OneDrive - ADvTECH Ltd\Desktop\ST10384345_PROG6212_POEPART2\St10384345_PROG6212_POEPART2\obj\Debug\net9.0\CMCS.csproj.CoreCompileInputs.cache
+C:\Users\lab_services_student\OneDrive - ADvTECH Ltd\Desktop\ST10384345_PROG6212_POEPART2\St10384345_PROG6212_POEPART2\obj\Debug\net9.0\CMCS.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\lab_services_student\OneDrive - ADvTECH Ltd\Desktop\ST10384345_PROG6212_POEPART2\St10384345_PROG6212_POEPART2\obj\Debug\net9.0\CMCS.RazorAssemblyInfo.cache
+C:\Users\lab_services_student\OneDrive - ADvTECH Ltd\Desktop\ST10384345_PROG6212_POEPART2\St10384345_PROG6212_POEPART2\obj\Debug\net9.0\CMCS.RazorAssemblyInfo.cs
+C:\Users\lab_services_student\OneDrive - ADvTECH Ltd\Desktop\ST10384345_PROG6212_POEPART2\St10384345_PROG6212_POEPART2\obj\Debug\net9.0\CMCS.sourcelink.json
+C:\Users\lab_services_student\OneDrive - ADvTECH Ltd\Desktop\ST10384345_PROG6212_POEPART2\St10384345_PROG6212_POEPART2\obj\Debug\net9.0\CMCS.dll
+C:\Users\lab_services_student\OneDrive - ADvTECH Ltd\Desktop\ST10384345_PROG6212_POEPART2\St10384345_PROG6212_POEPART2\obj\Debug\net9.0\refint\CMCS.dll
+C:\Users\lab_services_student\OneDrive - ADvTECH Ltd\Desktop\ST10384345_PROG6212_POEPART2\St10384345_PROG6212_POEPART2\obj\Debug\net9.0\CMCS.pdb

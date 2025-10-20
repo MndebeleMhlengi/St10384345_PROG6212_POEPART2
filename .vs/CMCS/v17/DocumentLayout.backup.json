@@ -1,27 +1,27 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\lab_services_student\\OneDrive - ADvTECH Ltd\\Desktop\\CMCS\\",
+  "WorkspaceRootPath": "C:\\Users\\lab_services_student\\OneDrive - ADvTECH Ltd\\Desktop\\ST10384345_PROG6212_POEPART2\\St10384345_PROG6212_POEPART2\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{D738652C-8D06-40AE-94EA-67054D9CC3E7}|..\\CMCS.Tests\\CMCS.Tests.csproj|c:\\users\\lab_services_student\\onedrive - advtech ltd\\desktop\\cmcs.tests\\cmcs.tests.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\lab_services_student\\OneDrive - ADvTECH Ltd\\Desktop\\CMCS.Tests\\CMCS.Tests.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D738652C-8D06-40AE-94EA-67054D9CC3E7}|..\\CMCS.Tests\\CMCS.Tests.csproj|c:\\users\\lab_services_student\\onedrive - advtech ltd\\desktop\\cmcs.tests\\userroletests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\lab_services_student\\OneDrive - ADvTECH Ltd\\Desktop\\CMCS.Tests\\ClaimApprovalTests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D738652C-8D06-40AE-94EA-67054D9CC3E7}|..\\CMCS.Tests\\CMCS.Tests.csproj|c:\\users\\lab_services_student\\onedrive - advtech ltd\\desktop\\cmcs.tests\\documentuploadtests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\lab_services_student\\OneDrive - ADvTECH Ltd\\Desktop\\CMCS.Tests\\DocumentUploadTests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D738652C-8D06-40AE-94EA-67054D9CC3E7}|..\\CMCS.Tests\\CMCS.Tests.csproj|c:\\users\\lab_services_student\\onedrive - advtech ltd\\desktop\\cmcs.tests\\claimcalculationtests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\lab_services_student\\OneDrive - ADvTECH Ltd\\Desktop\\CMCS.Tests\\ClaimCalculationTests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D738652C-8D06-40AE-94EA-67054D9CC3E7}|..\\CMCS.Tests\\CMCS.Tests.csproj|c:\\users\\lab_services_student\\onedrive - advtech ltd\\desktop\\cmcs.tests\\claimapprovaltests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\lab_services_student\\OneDrive - ADvTECH Ltd\\Desktop\\CMCS.Tests\\UserRoleTests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D738652C-8D06-40AE-94EA-67054D9CC3E7}|..\\CMCS.Tests\\CMCS.Tests.csproj|c:\\users\\lab_services_student\\onedrive - advtech ltd\\desktop\\cmcs.tests\\claimstatustests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\lab_services_student\\OneDrive - ADvTECH Ltd\\Desktop\\CMCS.Tests\\ClaimValidationTests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D738652C-8D06-40AE-94EA-67054D9CC3E7}|..\\CMCS.Tests\\CMCS.Tests.csproj|c:\\users\\lab_services_student\\onedrive - advtech ltd\\desktop\\cmcs.tests\\claimvalidationtests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\lab_services_student\\OneDrive - ADvTECH Ltd\\Desktop\\CMCS.Tests\\ClaimStatusTests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -31,20 +31,16 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 0,
           "Children": [
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
-            },
             {
               "$type": "Document",
               "DocumentIndex": 0,
               "Title": "CMCS.Tests.csproj",
               "DocumentMoniker": "C:\\Users\\lab_services_student\\OneDrive - ADvTECH Ltd\\Desktop\\CMCS.Tests\\CMCS.Tests.csproj",
-              "RelativeDocumentMoniker": "..\\CMCS.Tests\\CMCS.Tests.csproj",
+              "RelativeDocumentMoniker": "..\\..\\CMCS.Tests\\CMCS.Tests.csproj",
               "ToolTip": "C:\\Users\\lab_services_student\\OneDrive - ADvTECH Ltd\\Desktop\\CMCS.Tests\\CMCS.Tests.csproj",
-              "RelativeToolTip": "..\\CMCS.Tests\\CMCS.Tests.csproj",
+              "RelativeToolTip": "..\\..\\CMCS.Tests\\CMCS.Tests.csproj",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
               "WhenOpened": "2025-10-16T14:35:48.471Z",
@@ -52,76 +48,72 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 1,
               "Title": "ClaimApprovalTests.cs",
               "DocumentMoniker": "C:\\Users\\lab_services_student\\OneDrive - ADvTECH Ltd\\Desktop\\CMCS.Tests\\ClaimApprovalTests.cs",
-              "RelativeDocumentMoniker": "..\\CMCS.Tests\\ClaimApprovalTests.cs",
+              "RelativeDocumentMoniker": "..\\..\\CMCS.Tests\\ClaimApprovalTests.cs",
               "ToolTip": "C:\\Users\\lab_services_student\\OneDrive - ADvTECH Ltd\\Desktop\\CMCS.Tests\\ClaimApprovalTests.cs",
-              "RelativeToolTip": "..\\CMCS.Tests\\ClaimApprovalTests.cs",
+              "RelativeToolTip": "..\\..\\CMCS.Tests\\ClaimApprovalTests.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAEMAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-16T14:38:40.198Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-16T14:38:40.198Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
               "Title": "DocumentUploadTests.cs",
               "DocumentMoniker": "C:\\Users\\lab_services_student\\OneDrive - ADvTECH Ltd\\Desktop\\CMCS.Tests\\DocumentUploadTests.cs",
-              "RelativeDocumentMoniker": "..\\CMCS.Tests\\DocumentUploadTests.cs",
+              "RelativeDocumentMoniker": "..\\..\\CMCS.Tests\\DocumentUploadTests.cs",
               "ToolTip": "C:\\Users\\lab_services_student\\OneDrive - ADvTECH Ltd\\Desktop\\CMCS.Tests\\DocumentUploadTests.cs",
-              "RelativeToolTip": "..\\CMCS.Tests\\DocumentUploadTests.cs",
+              "RelativeToolTip": "..\\..\\CMCS.Tests\\DocumentUploadTests.cs",
               "ViewState": "AgIAABoAAAAAAAAAAAAUwFQAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-16T14:27:24.337Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-16T14:27:24.337Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
               "Title": "ClaimCalculationTests.cs",
               "DocumentMoniker": "C:\\Users\\lab_services_student\\OneDrive - ADvTECH Ltd\\Desktop\\CMCS.Tests\\ClaimCalculationTests.cs",
-              "RelativeDocumentMoniker": "..\\CMCS.Tests\\ClaimCalculationTests.cs",
+              "RelativeDocumentMoniker": "..\\..\\CMCS.Tests\\ClaimCalculationTests.cs",
               "ToolTip": "C:\\Users\\lab_services_student\\OneDrive - ADvTECH Ltd\\Desktop\\CMCS.Tests\\ClaimCalculationTests.cs",
-              "RelativeToolTip": "..\\CMCS.Tests\\ClaimCalculationTests.cs",
+              "RelativeToolTip": "..\\..\\CMCS.Tests\\ClaimCalculationTests.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAEcAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-16T15:11:40.499Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-16T15:11:40.499Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 4,
               "Title": "UserRoleTests.cs",
               "DocumentMoniker": "C:\\Users\\lab_services_student\\OneDrive - ADvTECH Ltd\\Desktop\\CMCS.Tests\\UserRoleTests.cs",
-              "RelativeDocumentMoniker": "..\\CMCS.Tests\\UserRoleTests.cs",
+              "RelativeDocumentMoniker": "..\\..\\CMCS.Tests\\UserRoleTests.cs",
               "ToolTip": "C:\\Users\\lab_services_student\\OneDrive - ADvTECH Ltd\\Desktop\\CMCS.Tests\\UserRoleTests.cs",
-              "RelativeToolTip": "..\\CMCS.Tests\\UserRoleTests.cs",
+              "RelativeToolTip": "..\\..\\CMCS.Tests\\UserRoleTests.cs",
               "ViewState": "AgIAACQAAAAAAAAAAAAowDsAAAAOAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-16T15:04:14.568Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-16T15:04:14.568Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 5,
               "Title": "ClaimValidationTests.cs",
               "DocumentMoniker": "C:\\Users\\lab_services_student\\OneDrive - ADvTECH Ltd\\Desktop\\CMCS.Tests\\ClaimValidationTests.cs",
-              "RelativeDocumentMoniker": "..\\CMCS.Tests\\ClaimValidationTests.cs",
+              "RelativeDocumentMoniker": "..\\..\\CMCS.Tests\\ClaimValidationTests.cs",
               "ToolTip": "C:\\Users\\lab_services_student\\OneDrive - ADvTECH Ltd\\Desktop\\CMCS.Tests\\ClaimValidationTests.cs",
-              "RelativeToolTip": "..\\CMCS.Tests\\ClaimValidationTests.cs",
+              "RelativeToolTip": "..\\..\\CMCS.Tests\\ClaimValidationTests.cs",
               "ViewState": "AgIAAFAAAAAAAAAAAAAcwIEAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-10-16T15:08:45.951Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
               "Title": "ClaimStatusTests.cs",
               "DocumentMoniker": "C:\\Users\\lab_services_student\\OneDrive - ADvTECH Ltd\\Desktop\\CMCS.Tests\\ClaimStatusTests.cs",
-              "RelativeDocumentMoniker": "..\\CMCS.Tests\\ClaimStatusTests.cs",
+              "RelativeDocumentMoniker": "..\\..\\CMCS.Tests\\ClaimStatusTests.cs",
               "ToolTip": "C:\\Users\\lab_services_student\\OneDrive - ADvTECH Ltd\\Desktop\\CMCS.Tests\\ClaimStatusTests.cs",
-              "RelativeToolTip": "..\\CMCS.Tests\\ClaimStatusTests.cs",
+              "RelativeToolTip": "..\\..\\CMCS.Tests\\ClaimStatusTests.cs",
               "ViewState": "AgIAAD0AAAAAAAAAAAAmwFMAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-10-16T15:10:31.619Z"
